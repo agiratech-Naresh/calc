@@ -11,6 +11,7 @@ body {
 .calculator {
     background-color: #fff;
     border-radius: 8px;
+    position: absolute;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     width: 300px;
@@ -50,11 +51,40 @@ button.double-zero {
 } */
 
 button.equals {
-    background-color: #e05219;
+    background-color: #19e044;
     color: #000000;
 
 }
 
 button:hover {
     background-color: #e6e6e6;
+}
+
+.clear{
+    margin-right: 13rem;
+    border-radius: 8px;
+}
+
+button.clear {
+    background-color: red;
+    color: #000000;
+}
+
+button:hover{
+    background-color: #e6e6e6;
+}
+
+.background-image {
+    position: relative;
+    height: 100vh; /* Adjust to your desired height */
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire container */
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.7; 
 }
