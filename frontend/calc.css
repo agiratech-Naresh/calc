@@ -21,14 +21,23 @@ body {
     padding: 10px;
     font-size: 1.5em;
     text-align: right;
-    border-bottom: 1px solid #ccc;
+    width: 277px;
+    /* border-bottom: 1px solid #ccc; */
 }
 
 .button {
+    width: 315px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
 
+#del{
+    grid-column: 3 / span 2;
+}
+#cl{
+    grid-column: 1 /span 2;
+
+}
 button {
     padding: 15px;
     font-size: 1.2em;
@@ -60,10 +69,6 @@ button:hover {
     background-color: #e6e6e6;
 }
 
-.clear{
-    margin-right: 13rem;
-    border-radius: 8px;
-}
 
 button.clear {
     background-color: red;
