@@ -27,9 +27,7 @@ function ButtonClick(value) {
 document.addEventListener("keyup", function (event) {
     const key = event.key;
 
-    if (/[0-9+\-*/.=]/.test(key)) {
-        ButtonClick(key);
-    } else if (key === "Enter") {
+    if (key === "Enter") {
         event.preventDefault();
         ButtonClick("=");
     } else if (key === "Delete") {
