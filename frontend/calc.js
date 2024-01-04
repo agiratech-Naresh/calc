@@ -23,7 +23,8 @@ function ButtonClick(value) {
     }
 }
 
-document.addEventListener("keydown", function (event) {
+
+document.addEventListener("keyup", function (event) {
     const key = event.key;
 
     if (/[0-9+\-*/.=]/.test(key)) {
@@ -31,7 +32,7 @@ document.addEventListener("keydown", function (event) {
     } else if (key === "Enter") {
         event.preventDefault();
         ButtonClick("=");
-    }else if (key === "Delete") {
+    } else if (key === "Delete") {
         ButtonClick("Del");
     } else if (key === "Escape") {
         ButtonClick("C");
@@ -39,49 +40,85 @@ document.addEventListener("keydown", function (event) {
 });
 
 
-
-
 function calculate(userInput) {
-    console.log(userInput,"input");
+    const precedence = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2
+    };
+
     const tokens = userInput.match(/[+\-*/]|\d+\.\d*|\d+/g);
-    console.log(tokens);
+    
     if (!tokens || tokens.length < 3) {
         throw new Error("Invalid expression");
     }
 
-    let result = parseFloat(tokens[0]);
-    for (let i = 1; i < tokens.length; i += 2) {
-        const operator = tokens[i];
-        const operand = parseFloat(tokens[i + 1]);
+    const output = [];
+    const operators = [];
 
-        if (isNaN(operand)) {
-            throw new Error("Invalid expression");
+    console.log('Tokens:', tokens);
+
+    tokens.forEach(token => {
+        if (/\d/.test(token)) {
+            output.push(parseFloat(token));
+        } else {
+            console.log('Current Token:', token);
+            while (
+                operators.length &&
+                precedence[operators[operators.length - 1]] >= precedence[token]
+            ) {
+                output.push(operators.pop());
+            }
+            operators.push(token);
         }
+    });
 
-        switch (operator) {
-            case "+":
-                result += operand;
-                break;
-            case "-":
-                result -= operand;
-                break;
-            case "*":
-                result *= operand;
-                break;
-            case "/":
-                if (operand !== 0) {
-                    result /= operand;
-                } else {
-                    throw new Error("Division by zero");
-                }
-                break;
-            default:
-                throw new Error("Invalid operator");
-        }    console.log(result,'finalresult');
-
+    while (operators.length) {
+        output.push(operators.pop());
     }
-    localStorage.setItem(display.value,result);
+
+    console.log('Output (Postfix):', output);
+
+    const stack = [];
+    output.forEach(token => {
+        if (typeof token === 'number') {
+            stack.push(token);
+        } else {
+            console.log('Current Operator:', token);
+            const operand2 = stack.pop();
+            const operand1 = stack.pop();
+
+            console.log('Operands:', operand1, operand2);
+
+            switch (token) {
+                case '+':
+                    stack.push(operand1 + operand2);
+                    break;
+                case '-':
+                    stack.push(operand1 - operand2);
+                    break;
+                case '*':
+                    stack.push(operand1 * operand2);
+                    break;
+                case '/':
+                    if (operand2 !== 0) {
+                        stack.push(operand1 / operand2);
+                    } else {
+                        throw new Error("Division by zero");
+                    }
+                    break;
+                default:
+                    throw new Error("Invalid operator");
+            }
+
+            console.log('Stack:', stack);
+        }
+    });
+
+    const result = stack.pop();
+    localStorage.setItem(display.value, result);
+    sessionStorage.setItem(display.value, result);
+
     return result.toString();
 }
-
-

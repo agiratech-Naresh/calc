@@ -22,7 +22,6 @@ body {
     font-size: 1.5em;
     text-align: right;
     width: 277px;
-    /* border-bottom: 1px solid #ccc; */
 }
 
 .button {
@@ -54,10 +53,6 @@ button.operator {
 button.double {
     grid-column: span 1;
 }
-/* 
-button.double-zero {
-    grid-column: span 2;
-} */
 
 button.equals {
     background-color: #19e044;
