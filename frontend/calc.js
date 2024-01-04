@@ -65,16 +65,16 @@ function calculate(userInput) {
         } else {
             console.log('Current Token:', token);
             while (operators.length > 0 && precedence[operators[operators.length - 1]] >= precedence[token]) {
-                let popedSymbol=operators.pop();
-                output.push(popedSymbol);
+                let popSymbol=operators.pop();
+                output.push(popSymbol);
             }
             operators.push(token);
         }
     });
 
     while (operators.length > 0) {
-        let popedSymbol=operators.pop();
-        output.push(popedSymbol);
+        let popSymbol=operators.pop();
+        output.push(popSymbol);
     }
 
     console.log('Output (Postfix):', output);
@@ -111,7 +111,6 @@ function calculate(userInput) {
                     throw new Error("Invalid operator");
             }
 
-            console.log('Stack:', stack);
         }
     });
 
