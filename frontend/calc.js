@@ -16,7 +16,7 @@ function ButtonClick(value) {
         try {
             display.value = calculate(display.value);
         } catch (error) {
-            display.value = "Error";
+            display.value = error;
         }
     } else {
         display.value += value;
