@@ -50,7 +50,7 @@ function calculate(userInput) {
 
     const tokens = userInput.match(/[+\-*/]|\d+\.\d*|\d+/g);
     
-    if (!tokens || tokens.length < 3) {
+    if (tokens.length < 3) {
         throw new Error("Invalid expression");
     }
 
@@ -60,22 +60,21 @@ function calculate(userInput) {
     console.log('Tokens:', tokens);
 
     tokens.forEach(token => {
-        if (/\d/.test(token)) {
+        if (!isNaN(token)) {
             output.push(parseFloat(token));
         } else {
             console.log('Current Token:', token);
-            while (
-                operators.length &&
-                precedence[operators[operators.length - 1]] >= precedence[token]
-            ) {
-                output.push(operators.pop());
+            while (operators.length > 0 && precedence[operators[operators.length - 1]] >= precedence[token]) {
+                let popedSymbol=operators.pop();
+                output.push(popedSymbol);
             }
             operators.push(token);
         }
     });
 
-    while (operators.length) {
-        output.push(operators.pop());
+    while (operators.length > 0) {
+        let popedSymbol=operators.pop();
+        output.push(popedSymbol);
     }
 
     console.log('Output (Postfix):', output);
